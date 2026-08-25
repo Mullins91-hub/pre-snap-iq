@@ -18,9 +18,151 @@ const FIELD_WIDTH = SCREEN_WIDTH - 32;
 const FIELD_HEIGHT = 240;
 
 // =============================================================================
-// COMPLETE MASTER PLAYBOOK DATABASE (ALL ORIGINAL READS + STALLIONS PDF)
+// COMPLETE MASTER PLAYBOOK DATABASE (ORIGINAL + STALLIONS PDF + TACTICAL READS)
 // =============================================================================
 const baseScenarios = [
+  // ---------------------------------------------------------------------------
+  // 🎯 REAL-TIME TACTICAL DECISION READS (BOX COUNTS, COVERAGE CHECKS & HOTS)
+  // ---------------------------------------------------------------------------
+  {
+    id: 'tac_01',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defense shows Cover 0 pressure (8 in box, no deep safety). What is your pre-snap check?',
+    correctAnswer: 'Check to Hot Quick Slant / Sight Adjust',
+    choices: ['Check to Hot Quick Slant / Sight Adjust', 'Keep 7-Step Drop Four Verticals', 'Outside Zone Run', 'Slow Developing Play Action'],
+    keyRead: 'Cover 0 Check: Zero safety help over top. Throw Hot immediately to beat unblocked pressure.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'FS', x: 42, y: 46, team: 'DEF', isKeyRead: true },
+      { id: '11', role: 'SS', x: 58, y: 46, team: 'DEF', isKeyRead: true }, { id: '12', role: 'MIKE', x: 50, y: 50, team: 'DEF' }
+    ]
+  },
+  {
+    id: 'tac_02',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Safeties split wide to 15 yards (Cover 2). Where is your primary passing window?',
+    correctAnswer: 'Deep Middle Seam (Tampa Gap)',
+    choices: ['Deep Middle Seam (Tampa Gap)', 'Underneath Flat', 'Off-Coverage Sideline', 'A-Gap Scrimmage'],
+    keyRead: 'Cover 2 Read: Split safeties leave a high-value void down the center field pipe.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'Y',  x: 68, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'FS', x: 30, y: 15, team: 'DEF', isKeyRead: true }, { id: '4', role: 'SS', x: 70, y: 15, team: 'DEF', isKeyRead: true },
+      { id: '5', role: 'MIKE', x: 50, y: 42, team: 'DEF' }
+    ]
+  },
+  {
+    id: 'tac_03',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Single-high safety center field, CBs off at 8 yards (Cover 3 Sky). How do you attack the flats?',
+    correctAnswer: 'Curl-Flat / Sail Concept',
+    choices: ['Curl-Flat / Sail Concept', 'Inside Zone Run', 'Deep Post Route', 'QB Sneak'],
+    keyRead: 'Cover 3 Read: High-low horizontal stress on the curl/flat defender isolates the single walked-down safety.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'FS', x: 50, y: 15, team: 'DEF', isKeyRead: true },
+      { id: '3', role: 'SS', x: 72, y: 44, team: 'DEF', isKeyRead: true }, { id: '4', role: 'CB1', x: 10, y: 25, team: 'DEF' },
+      { id: '5', role: 'CB2', x: 90, y: 25, team: 'DEF' }
+    ]
+  },
+  {
+    id: 'tac_04',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defense presents a light 5-man box vs 11 Personnel. What is the pre-snap check?',
+    correctAnswer: 'Check to Inside Zone / Mid-Zone Run',
+    choices: ['Check to Inside Zone / Mid-Zone Run', 'Check to Max Protect Pass', 'Call Timeout', 'Throw Bubble Screen'],
+    keyRead: 'Box Count Read: 5-man box gives offense a +1 blocking advantage in the run game.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
+      { id: '3', role: 'DE1', x: 34, y: 55, team: 'DEF' }, { id: '4', role: 'DT1', x: 45, y: 55, team: 'DEF' },
+      { id: '5', role: 'DT2', x: 55, y: 55, team: 'DEF' }, { id: '6', role: 'DE2', x: 66, y: 55, team: 'DEF' },
+      { id: '7', role: 'MIKE', x: 50, y: 46, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_05',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Cornerback playing 10 yards off receiver on 3rd & 3. What is the optimal conversion check?',
+    correctAnswer: 'Check to Quick Hitch / Out-Route',
+    choices: ['Check to Quick Hitch / Out-Route', 'Check to Four Verticals', 'Check to HB Draw', 'Check to Cross Screen'],
+    keyRead: 'Off-Leverage Read: Cushion leverage gives easy completion before CB can break on ball.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'CB1', x: 10, y: 25, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_06',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defensive End aligned in 9-technique wide shoulder. How do you exploit this front?',
+    correctAnswer: 'Trap / B-Gap Interior Run',
+    choices: ['Trap / B-Gap Interior Run', 'Outside Jet Sweep', 'Flea Flicker', 'Sprintout Rollout Right'],
+    keyRead: 'Front Technique Read: Wide DE opens B-gap interior lanes for quick trap and iso concepts.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RT', x: 62, y: 60, team: 'OFF' },
+      { id: '3', role: 'DE2', x: 76, y: 55, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_07',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Double A-Gap Blitz look pre-snap. What pass protection adjustment is required?',
+    correctAnswer: 'Slide Protection Center/Guard & Squeeze Box',
+    choices: ['Slide Protection Center/Guard & Squeeze Box', 'Free Release Full Backfield', '5-Man Fan Protection', 'Max Protect 2-Receiver Route'],
+    keyRead: 'Blitz Pickup Read: Squeezing A-gaps prevents direct up-the-middle path to QB.',
+    players: [
+      { id: '1', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '2', role: 'MIKE', x: 47, y: 52, team: 'DEF', isKeyRead: true },
+      { id: '3', role: 'WILL', x: 53, y: 52, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_08',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Strong Safety walked down to 4 yards over Slot Receiver in Press alignment.',
+    correctAnswer: 'Fade-Out / Rub Route Concept',
+    choices: ['Fade-Out / Rub Route Concept', 'Inside Zone Run', 'Slow QB Draw', 'Mid-Field Post'],
+    keyRead: 'Slot Man Read: Press slot leverage creates high-low pick opportunities for stacked receivers.',
+    players: [
+      { id: '1', role: 'W2', x: 76, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '2', role: 'SS', x: 76, y: 48, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_09',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Both Safeties aligned deep at 18 yards (Cover 4 Quarters). What short concept opens up?',
+    correctAnswer: 'Underneath Dig / Shallow Crosser',
+    choices: ['Underneath Dig / Shallow Crosser', 'Four Verticals', 'Deep Post Corner', 'Hail Mary'],
+    keyRead: 'Cover 4 Read: Deep 4ths defense concedes short underneath middle space.',
+    players: [
+      { id: '1', role: 'FS', x: 35, y: 15, team: 'DEF', isKeyRead: true },
+      { id: '2', role: 'SS', x: 65, y: 15, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_10',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defensive Line slanting hard to field side pre-snap. How do you audible?',
+    correctAnswer: 'Check Run Away From Slant (Boundary)',
+    choices: ['Check Run Away From Slant (Boundary)', 'Run Straight Into Slant', 'Slow Screen Field Side', 'Quarterback Sweep Field Side'],
+    keyRead: 'DL Slant Read: Running opposite of DL stunt momentum captures easy cutback lanes.',
+    players: [
+      { id: '1', role: 'DT1', x: 48, y: 55, team: 'DEF', isKeyRead: true },
+      { id: '2', role: 'DE1', x: 42, y: 56, team: 'DEF', isKeyRead: true }
+    ]
+  },
+
   // ---------------------------------------------------------------------------
   // 🇬🇧 WEMBLEY STALLIONS SENIOR PASS PLAYS & UK TEAM READS
   // ---------------------------------------------------------------------------
@@ -144,50 +286,6 @@ const baseScenarios = [
   // ---------------------------------------------------------------------------
   // DEFENSIVE READS (ALL SCHEMES, COVERAGES & FRONTS)
   // ---------------------------------------------------------------------------
-  {
-    id: 'def_c0_action',
-    isTeamPlaybook: false,
-    mode: 'DEFENSE',
-    prompt: 'TACTICAL DECISION: Defense is showing Cover 0 (All-out Blitz). What is the QB check?',
-    correctAnswer: 'Throw Hot / Quick Slant',
-    choices: ['Throw Hot / Quick Slant', 'Check to Deep Post', 'Run Outside Zone', 'Max Protect 7-Step Drop'],
-    keyRead: 'Tactical Read: Against Cover 0 blitz, there is no deep safety. Throw Hot immediately.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'FS',   x: 42, y: 46, team: 'DEF', isKeyRead: true }, { id: '12', role: 'SS',   x: 58, y: 46, team: 'DEF', isKeyRead: true },
-      { id: '13', role: 'CB1',  x: 10, y: 52, team: 'DEF' }, { id: '14', role: 'CB2',  x: 90, y: 52, team: 'DEF' },
-      { id: '15', role: 'MIKE', x: 50, y: 50, team: 'DEF' }, { id: '16', role: 'WILL', x: 36, y: 50, team: 'DEF' },
-      { id: '17', role: 'SAM',  x: 64, y: 50, team: 'DEF' }, { id: '18', role: 'DE1',  x: 32, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
-    ]
-  },
-  {
-    id: 'def_c2_action',
-    isTeamPlaybook: false,
-    mode: 'DEFENSE',
-    prompt: 'TACTICAL DECISION: Defense is in Cover 2 Zone. Where is the primary vulnerability?',
-    correctAnswer: 'Deep Middle Hole (Tampa Gap)',
-    choices: ['Deep Middle Hole (Tampa Gap)', 'Underneath Flat', 'Off-Coverage Sideline', 'A-Gap Scrimmage'],
-    keyRead: 'Tactical Read: Cover 2 leaves a soft void deep down the middle seam between splitting safeties.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'FS',   x: 30, y: 15, team: 'DEF', isKeyRead: true }, { id: '12', role: 'SS',   x: 70, y: 15, team: 'DEF', isKeyRead: true },
-      { id: '13', role: 'CB1',  x: 10, y: 48, team: 'DEF' }, { id: '14', role: 'CB2',  x: 90, y: 48, team: 'DEF' },
-      { id: '15', role: 'MIKE', x: 50, y: 42, team: 'DEF' }, { id: '16', role: 'WILL', x: 40, y: 42, team: 'DEF' },
-      { id: '17', role: 'SAM',  x: 60, y: 42, team: 'DEF' }, { id: '18', role: 'DE1',  x: 36, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
-    ]
-  },
   {
     id: 'def_43',
     isTeamPlaybook: false,
@@ -619,7 +717,8 @@ const MASTER_CHOICE_POOL = [
   'Cover 4 Quarters', 'Cover 6 Hybrid', 'Double A-Gap Blitz', 'Nickel Corner Blitz',
   '4-3 Base Front', '3-4 Base Front', 'BENCH 10 - (2 x 2)', 'DEEP OUT 11 - (3 x 1)',
   'FAN BUNCH (3 x 1)', '22 Personnel / Heavy I-Form', 'Pistol Alignment',
-  'Unbalanced Line / Tackle Over', '12 Personnel "ACE"', '13 Personnel / Jumbo Package'
+  'Check to Hot Quick Slant / Sight Adjust', 'Deep Middle Seam (Tampa Gap)',
+  'Curl-Flat / Sail Concept', 'Check to Inside Zone / Mid-Zone Run'
 ];
 
 const shuffleArray = (array) => {
