@@ -18,12 +18,36 @@ const FIELD_WIDTH = SCREEN_WIDTH - 32;
 const FIELD_HEIGHT = 240;
 
 // =============================================================================
-// COMPLETE MASTER PLAYBOOK DATABASE (ORIGINAL + STALLIONS PDF + TACTICAL READS)
+// MASTER CHOICE POOL
+// =============================================================================
+const MASTER_CHOICE_POOL = [
+  'Cover 0 (Zero Pressure)', 'Cover 1 Man', 'Cover 2 Zone', 'Cover 3 Sky',
+  'Cover 4 Quarters', 'Cover 6 Hybrid', 'Double A-Gap Blitz', 'Nickel Corner Blitz',
+  '4-3 Base Front', '3-4 Base Front', '4-4 Heavy Front', '5-2 Eagle Front',
+  '46 Bear Front', 'Nickel 4-2-5 Defense', 'Dime 4-1-6 Defense',
+  'Cover 3 Buzz (Safety Down)', 'Cover 2 Invert (CB Deep Split)', 'Mugged LB Overload Blitz',
+  'BENCH 10 - (2 x 2)', 'DEEP OUT 11 - (3 x 1)', 'FAN BUNCH (3 x 1)',
+  'GADGETS HOOK & LADDER', 'EMPTY(00) Double Bench', "CATS 5-2 Pressure Front ('TIGER')",
+  '11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', 'Pistol Alignment',
+  '10 Personnel / Empty Backfield', '12 Personnel / Ace Wing Right',
+  '21 Personnel / Split-Back Pro', '13 Personnel / Jumbo Goal Line',
+  'Wildcat Unbalanced Heavy', 'Trips Stack / Off-Line Release',
+  'Empty Quad Left / Boundary Isolation', '3x1 Bunch Flex Alignment',
+  'Wishbone Triple Option Alignment', 'Diamond / Pistol Overload',
+  'Smash-Seam High-Low Concept', 'Mesh-Wheel Crosser Concept',
+  'Check to Hot Quick Slant / Sight Adjust', 'Deep Middle Seam (Tampa Gap)',
+  'Curl-Flat / Sail Concept', 'Check to Inside Zone / Mid-Zone Run',
+  'Check to Quick Hitch / Out-Route', 'Trap / B-Gap Interior Run',
+  'Slide Protection Center/Guard & Squeeze Box', 'Fade-Out / Rub Route Concept',
+  'Underneath Dig / Shallow Crosser', 'Check Run Away From Slant (Boundary)',
+  'Check to Bubble Screen / Flash Flat'
+];
+
+// =============================================================================
+// COMPLETE MASTER PLAYBOOK DATABASE (UNABRIDGED)
 // =============================================================================
 const baseScenarios = [
-  // ---------------------------------------------------------------------------
-  // 🎯 REAL-TIME TACTICAL DECISION READS (BOX COUNTS, COVERAGE CHECKS & HOTS)
-  // ---------------------------------------------------------------------------
+  // --- TACTICAL READS ---
   {
     id: 'tac_01',
     isTeamPlaybook: false,
@@ -162,130 +186,319 @@ const baseScenarios = [
       { id: '2', role: 'DE1', x: 42, y: 56, team: 'DEF', isKeyRead: true }
     ]
   },
-
-  // ---------------------------------------------------------------------------
-  // 🇬🇧 WEMBLEY STALLIONS SENIOR PASS PLAYS & UK TEAM READS
-  // ---------------------------------------------------------------------------
   {
-    id: 'uk_play_01',
-    isTeamPlaybook: true,
-    mode: 'OFFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 10 Personnel 2x2 spread concept.',
-    correctAnswer: 'BENCH 10 - (2 x 2)',
-    choices: ['BENCH 10 - (2 x 2)', 'BILLIE 10 - (2 x 2)', 'DEEP OUT 10 - (2 x 2)', 'SLANTS 10 - (2 x 2)'],
-    keyRead: 'Stallions Call: BENCH 10 targeting flat defenders out of a 2x2 spread.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 44, y: 72, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'W1', x: 10, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '9', role: 'W2', x: 24, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W3', x: 76, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '11', role: 'W4', x: 90, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 35, y: 20, team: 'DEF' },
-      { id: '13', role: 'SS',   x: 65, y: 20, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
-      { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' }, { id: '16', role: 'NC1',  x: 24, y: 38, team: 'DEF' },
-      { id: '17', role: 'NC2',  x: 76, y: 38, team: 'DEF' }, { id: '18', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
-      { id: '19', role: 'DE1',  x: 34, y: 55, team: 'DEF' }, { id: '20', role: 'DT1',  x: 48, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
-    ]
-  },
-  {
-    id: 'uk_play_02',
-    isTeamPlaybook: true,
-    mode: 'OFFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 11 Personnel 3x1 unbalanced concept.',
-    correctAnswer: 'DEEP OUT 11 - (3 x 1)',
-    choices: ['BENCH 11 - (3 x 1)', 'DEEP OUT 11 - (3 x 1)', 'FAN BUNCH (3 x 1)', 'FLOOD 11 - (3 x 1)'],
-    keyRead: 'Stallions Call: DEEP OUT 11 featuring 1 TE inline left with 3 receivers stacked right.',
+    id: 'tac_11',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defense shows 8-man blitz pre-snap but Safety is creeping into High-Flat. What is the check?',
+    correctAnswer: 'Check to Bubble Screen / Flash Flat',
+    choices: ['Check to Bubble Screen / Flash Flat', 'Check to Inside Zone / Mid-Zone Run', 'Keep 7-Step Drop Four Verticals', 'QB Draw'],
+    keyRead: 'Disguised Blitz: Heavy interior pressure with soft flats invites quick perimeter screen throws.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'TE', x: 32, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '9', role: 'W1', x: 72, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W2', x: 82, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '11', role: 'W3', x: 92, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' },
-      { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
-      { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' }, { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
-      { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' }, { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
+      { id: '3', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true }, { id: '4', role: 'W2', x: 22, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '5', role: 'CB1', x: 10, y: 38, team: 'DEF', isKeyRead: true }, { id: '6', role: 'SS', x: 30, y: 48, team: 'DEF', isKeyRead: true }
     ]
   },
   {
-    id: 'uk_play_03',
-    isTeamPlaybook: true,
+    id: 'tac_12',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Defense shows Cover 2, but Corners drop deep while Safety rolls into the hole pre-snap.',
+    correctAnswer: 'Cover 2 Invert (CB Deep Split)',
+    choices: ['Cover 2 Invert (CB Deep Split)', 'Cover 0 (Zero Pressure)', 'Cover 4 Quarters', 'Double A-Gap Blitz'],
+    keyRead: 'Cover 2 Invert: Field corners guard deep 1/2 zones while safeties rob the low middle.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' },
+      { id: '2', role: 'CB1', x: 15, y: 18, team: 'DEF', isKeyRead: true }, { id: '3', role: 'CB2', x: 85, y: 18, team: 'DEF', isKeyRead: true },
+      { id: '4', role: 'FS', x: 50, y: 42, team: 'DEF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'tac_13',
+    isTeamPlaybook: false,
+    mode: 'DEFENSE',
+    prompt: 'TACTICAL READ: Linebackers mugged in both B-Gaps with 1-on-1 single coverage outside.',
+    correctAnswer: 'Mugged LB Overload Blitz',
+    choices: ['Mugged LB Overload Blitz', 'Cover 3 Sky', '4-3 Base Front', 'Cover 4 Quarters'],
+    keyRead: 'Mugged B-Gaps: Linebackers crowding guard gaps create immediate 6-on-5 protection dilemmas.',
+    players: [
+      { id: '1', role: 'C', x: 50, y: 60, team: 'OFF' }, { id: '2', role: 'LG', x: 44, y: 60, team: 'OFF' }, { id: '3', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '4', role: 'MIKE', x: 41, y: 53, team: 'DEF', isKeyRead: true }, { id: '5', role: 'WILL', x: 59, y: 53, team: 'DEF', isKeyRead: true }
+    ]
+  },
+
+  // --- OFFENSIVE FORMATIONS & CONCEPTS ---
+  {
+    id: 'off1',
+    isTeamPlaybook: false,
     mode: 'OFFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 3x1 bunch alignment.',
-    correctAnswer: 'FAN BUNCH (3 x 1)',
-    choices: ['FAN BUNCH (3 x 1)', 'BENCH BUNCH (3 x 1)', 'BILLIE BUNCH (3 x 1)', 'MESH BUNCH (3 x 1)'],
-    keyRead: 'Stallions Call: FAN BUNCH 3x1 receiver cluster to release wide fan routes.',
+    prompt: 'OFFENSIVE READ: 1 RB, 1 TE inline left, 3 WRs aligned right.',
+    correctAnswer: '11 Personnel / Trips Right',
+    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', 'Pistol Alignment'],
+    keyRead: '11 Personnel Trips: 1 RB + 1 TE + 3 WRs. Overloads right side passing zones.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
       { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
       { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
       { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'TE', x: 32, y: 60, team: 'OFF' },
-      { id: '9', role: 'W1', x: 80, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W2', x: 84, y: 63, team: 'OFF', isKeyRead: true },
-      { id: '11', role: 'W3', x: 88, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' },
-      { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
-      { id: '15', role: 'CB2',  x: 82, y: 35, team: 'DEF' }, { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
-      { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' }, { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
+      { id: '9', role: 'W1', x: 74, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '10', role: 'W2', x: 82, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '11', role: 'W3', x: 90, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' },
+      { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' },
+      { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' },
+      { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' }, { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' },
+      { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
     ]
   },
   {
-    id: 'uk_play_04',
-    isTeamPlaybook: true,
+    id: 'off2',
+    isTeamPlaybook: false,
     mode: 'OFFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this trick play design.',
-    correctAnswer: 'GADGETS HOOK & LADDER',
-    choices: ['GADGETS HOOK & LADDER', 'GADGETS SLIP SCREEN', 'GADGETS CROSS SCREEN', 'GADGETS Tunnel Screen'],
-    keyRead: 'Stallions Gadget: Hook route curl with immediate lateral pitch to trailing receiver.',
+    prompt: 'OFFENSIVE READ: 2 Running Backs stacked under center with 2 Tight Ends.',
+    correctAnswer: '22 Personnel / Heavy I-Form',
+    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', '12 Personnel / Ace Wing Right'],
+    keyRead: '22 Personnel: Heavy run alignment requiring an 8-man box.',
     players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 44, y: 72, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 26, y: 60, team: 'OFF', isKeyRead: true }
+      { id: '1', role: 'QB', x: 50, y: 68, team: 'OFF' }, { id: '2', role: 'FB', x: 50, y: 76, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'RB', x: 50, y: 84, team: 'OFF', isKeyRead: true }, { id: '4', role: 'T1', x: 32, y: 60, team: 'OFF' },
+      { id: '5', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '6', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '7', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '8', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '9', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '10', role: 'T2', x: 68, y: 60, team: 'OFF' },
+      { id: '11', role: 'X',  x: 10, y: 60, team: 'OFF' },
+      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 65, y: 44, team: 'DEF' },
+      { id: '14', role: 'CB1',  x: 10, y: 40, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 40, team: 'DEF' },
+      { id: '16', role: 'MIKE', x: 50, y: 48, team: 'DEF' }, { id: '17', role: 'WILL', x: 42, y: 48, team: 'DEF' },
+      { id: '18', role: 'SAM',  x: 58, y: 48, team: 'DEF' }, { id: '19', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
+      { id: '20', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 70, y: 55, team: 'DEF' },
     ]
   },
   {
-    id: 'uk_play_05',
-    isTeamPlaybook: true,
+    id: 'off4',
+    isTeamPlaybook: false,
     mode: 'OFFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this empty 5-receiver package.',
-    correctAnswer: 'EMPTY(00) Double Bench',
-    choices: ['EMPTY(00) Double Bench', 'EMPTY(00) Jet Sweep Pop', 'EMPTY(00) OB Draw', 'EMPTY(00) Deep Out'],
-    keyRead: 'Stallions Empty Set: 5 receivers split out running bench/out concepts.',
+    prompt: 'OFFENSIVE READ: 1 RB directly behind QB in shotgun with H-Back offset.',
+    correctAnswer: 'Pistol Alignment',
+    choices: ['11 Personnel / Trips Right', 'Pistol Alignment', '10 Personnel / Empty Backfield', '21 Personnel / Split-Back Pro'],
+    keyRead: 'Pistol: RB aligns directly behind QB for downhill run flow.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 68, team: 'OFF', isKeyRead: true },
+      { id: '2', role: 'RB', x: 50, y: 76, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'HB', x: 58, y: 64, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '5', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '6', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '7', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '8', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '9', role: 'X',  x: 10, y: 60, team: 'OFF' },
+      { id: '10', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '11', role: 'Y', x: 30, y: 60, team: 'OFF' },
+      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 68, y: 38, team: 'DEF' },
+      { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' },
+      { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' },
+      { id: '18', role: 'DE1',  x: 34, y: 55, team: 'DEF' }, { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' },
+      { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 66, y: 55, team: 'DEF' },
+    ]
+  },
+  {
+    id: 'off5',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: No running back in backfield. 5 wide receivers spread across line.',
+    correctAnswer: '10 Personnel / Empty Backfield',
+    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', 'Empty Quad Left / Boundary Isolation'],
+    keyRead: 'Empty Backfield: 100% pass threat or QB draw. Defense must check to nickel/dime coverage.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF', isKeyRead: true },
       { id: '2', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '3', role: 'LG', x: 44, y: 60, team: 'OFF' },
       { id: '4', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '5', role: 'RG', x: 56, y: 60, team: 'OFF' },
       { id: '6', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '7', role: 'W1', x: 8,  y: 60, team: 'OFF' },
       { id: '8', role: 'W2', x: 22, y: 60, team: 'OFF' }, { id: '9', role: 'W3', x: 74, y: 60, team: 'OFF' },
-      { id: '10', role: 'W4', x: 84, y: 60, team: 'OFF' }, { id: '11', role: 'W5', x: 94, y: 60, team: 'OFF' }
+      { id: '10', role: 'W4', x: 84, y: 60, team: 'OFF' }, { id: '11', role: 'W5', x: 94, y: 60, team: 'OFF' },
+      { id: '12', role: 'FS',   x: 35, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 65, y: 20, team: 'DEF' },
+      { id: '14', role: 'CB1',  x: 8,  y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 94, y: 35, team: 'DEF' },
+      { id: '16', role: 'NC1',  x: 22, y: 35, team: 'DEF' }, { id: '17', role: 'NC2',  x: 84, y: 35, team: 'DEF' },
+      { id: '18', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '19', role: 'DE1',  x: 36, y: 55, team: 'DEF' },
+      { id: '20', role: 'DT1',  x: 48, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
     ]
   },
   {
-    id: 'uk_play_06',
-    isTeamPlaybook: true,
-    mode: 'DEFENSE',
-    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this defensive front check.',
-    correctAnswer: "CATS 5-2 Pressure Front ('TIGER')",
-    choices: ["CATS 5-2 Pressure Front ('TIGER')", 'CATS Crow', 'KNIGHTS 4-2-5 Defence', 'KNIGHTS 5-2 Cover 1'],
-    keyRead: 'Stallions Defensive Check: 5-2 pressure alignment designed to plug running gaps.',
+    id: 'off6',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 1 RB, 2 TEs (1 inline left, 1 wing right), 2 WRs wide.',
+    correctAnswer: '12 Personnel / Ace Wing Right',
+    choices: ['12 Personnel / Ace Wing Right', '21 Personnel / Split-Back Pro', '11 Personnel / Trips Right', 'Wishbone Triple Option Alignment'],
+    keyRead: '12 Personnel Ace Wing: Balanced 2-TE set creating dual C-gap edge threats for power runs.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
       { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
       { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'E1', x: 30, y: 55, team: 'DEF', isKeyRead: true },
-      { id: '9', role: 'T1', x: 40, y: 55, team: 'DEF', isKeyRead: true }, { id: '10', role: 'N', x: 50, y: 55, team: 'DEF', isKeyRead: true },
-      { id: '11', role: 'T2', x: 60, y: 55, team: 'DEF', isKeyRead: true }, { id: '12', role: 'E2', x: 70, y: 55, team: 'DEF', isKeyRead: true }
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'Y1', x: 32, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'Y2', x: 68, y: 64, team: 'OFF', isKeyRead: true }, { id: '10', role: 'X',  x: 10, y: 60, team: 'OFF' },
+      { id: '11', role: 'Z',  x: 90, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off7',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 2 RBs split parallel behind QB with 1 TE inline and 2 WRs wide.',
+    correctAnswer: '21 Personnel / Split-Back Pro',
+    choices: ['21 Personnel / Split-Back Pro', '22 Personnel / Heavy I-Form', 'Pistol Alignment', 'Diamond / Pistol Overload'],
+    keyRead: '21 Split-Back Pro: Classic dual-back set enabling misdirection, option pitches, and full slide protections.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 68, team: 'OFF' },
+      { id: '2', role: 'HB1', x: 42, y: 76, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'HB2', x: 58, y: 76, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '5', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '6', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '7', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '8', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '9', role: 'TE', x: 68, y: 60, team: 'OFF' },
+      { id: '10', role: 'X',  x: 10, y: 60, team: 'OFF' }, { id: '11', role: 'Z',  x: 90, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off8',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 3 TEs packed tight with 1 Fullback under center on short yardage.',
+    correctAnswer: '13 Personnel / Jumbo Goal Line',
+    choices: ['13 Personnel / Jumbo Goal Line', '22 Personnel / Heavy I-Form', 'Wildcat Unbalanced Heavy', 'Wishbone Triple Option Alignment'],
+    keyRead: '13 Jumbo Goal Line: Maximum blocking mass inside the 5-yard line. Forces goal-line defense.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 66, team: 'OFF' }, { id: '2', role: 'FB', x: 50, y: 73, team: 'OFF' },
+      { id: '3', role: 'RB', x: 50, y: 80, team: 'OFF' },
+      { id: '4', role: 'TE1', x: 32, y: 60, team: 'OFF', isKeyRead: true }, { id: '5', role: 'LT', x: 38, y: 60, team: 'OFF' },
+      { id: '6', role: 'LG',  x: 44, y: 60, team: 'OFF' }, { id: '7', role: 'C',  x: 50, y: 60, team: 'OFF' },
+      { id: '8', role: 'RG',  x: 56, y: 60, team: 'OFF' }, { id: '9', role: 'RT', x: 62, y: 60, team: 'OFF' },
+      { id: '10', role: 'TE2', x: 68, y: 60, team: 'OFF', isKeyRead: true }, { id: '11', role: 'TE3', x: 74, y: 60, team: 'OFF', isKeyRead: true }
+    ]
+  },
+  {
+    id: 'off9',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: Running Back lined up directly at Center with QB split wide.',
+    correctAnswer: 'Wildcat Unbalanced Heavy',
+    choices: ['Wildcat Unbalanced Heavy', 'Pistol Alignment', '10 Personnel / Empty Backfield', '21 Personnel / Split-Back Pro'],
+    keyRead: 'Wildcat Snap: Direct snap to RB creates an immediate +1 blocking advantage at line of scrimmage.',
+    players: [
+      { id: '1', role: 'RB(C)', x: 50, y: 72, team: 'OFF', isKeyRead: true },
+      { id: '2', role: 'QB(W)', x: 90, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'FB', x: 44, y: 72, team: 'OFF' },
+      { id: '4', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '5', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '6', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '7', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '8', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '9', role: 'TE', x: 68, y: 60, team: 'OFF' },
+      { id: '10', role: 'X',  x: 10, y: 60, team: 'OFF' }, { id: '11', role: 'H',  x: 32, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off10',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 2 WRs stacked directly behind each other on the perimeter.',
+    correctAnswer: 'Trips Stack / Off-Line Release',
+    choices: ['Trips Stack / Off-Line Release', '3x1 Bunch Flex Alignment', '11 Personnel / Trips Right', 'Empty Quad Left / Boundary Isolation'],
+    keyRead: 'Receiver Stack: Eliminates press coverage attempts by creating immediate pick/rub routes.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' },
+      { id: '8', role: 'W1', x: 86, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'W2', x: 86, y: 65, team: 'OFF', isKeyRead: true },
+      { id: '10', role: 'W3', x: 72, y: 60, team: 'OFF' }, { id: '11', role: 'X',  x: 10, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off11',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 4 receivers overloaded to left side with 1 single WR isolated right.',
+    correctAnswer: 'Empty Quad Left / Boundary Isolation',
+    choices: ['Empty Quad Left / Boundary Isolation', '10 Personnel / Empty Backfield', 'Trips Stack / Off-Line Release', '3x1 Bunch Flex Alignment'],
+    keyRead: 'Quad Overload: Stresses defensive zone shifts while creating 1-on-1 boundary ISO on the right.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' },
+      { id: '2', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '3', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '4', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '5', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '6', role: 'RT', x: 62, y: 60, team: 'OFF' },
+      { id: '7', role: 'W1', x: 8,  y: 60, team: 'OFF', isKeyRead: true },
+      { id: '8', role: 'W2', x: 18, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'W3', x: 28, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '10', role: 'W4', x: 38, y: 64, team: 'OFF', isKeyRead: true },
+      { id: '11', role: 'X',  x: 92, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off12',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: 3-man backfield forming a triangle around the QB in shotgun.',
+    correctAnswer: 'Diamond / Pistol Overload',
+    choices: ['Diamond / Pistol Overload', 'Wishbone Triple Option Alignment', '21 Personnel / Split-Back Pro', 'Pistol Alignment'],
+    keyRead: 'Diamond Formation: Provides 2 lead blockers for power runs to either A/B gap or max pass protection.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' },
+      { id: '2', role: 'FB1', x: 42, y: 72, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'FB2', x: 58, y: 72, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'RB',  x: 50, y: 80, team: 'OFF', isKeyRead: true },
+      { id: '5', role: 'LT',  x: 38, y: 60, team: 'OFF' }, { id: '6', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '7', role: 'C',   x: 50, y: 60, team: 'OFF' }, { id: '8', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '9', role: 'RT',  x: 62, y: 60, team: 'OFF' }, { id: '10', role: 'X', x: 10, y: 60, team: 'OFF' },
+      { id: '11', role: 'Z',  x: 90, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off13',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: Under center with FB close and 2 Halfbacks flared out in a "V" shape.',
+    correctAnswer: 'Wishbone Triple Option Alignment',
+    choices: ['Wishbone Triple Option Alignment', '22 Personnel / Heavy I-Form', 'Diamond / Pistol Overload', '21 Personnel / Split-Back Pro'],
+    keyRead: 'Wishbone: Classic option formation giving QB immediate give, keeper, or pitch reads.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 66, team: 'OFF' },
+      { id: '2', role: 'FB', x: 50, y: 73, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'HB1', x: 40, y: 80, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'HB2', x: 60, y: 80, team: 'OFF', isKeyRead: true },
+      { id: '5', role: 'LT',  x: 38, y: 60, team: 'OFF' }, { id: '6', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '7', role: 'C',   x: 50, y: 60, team: 'OFF' }, { id: '8', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '9', role: 'RT',  x: 62, y: 60, team: 'OFF' }, { id: '10', role: 'X', x: 10, y: 60, team: 'OFF' },
+      { id: '11', role: 'Z',  x: 90, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'off14',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: Outside WR running Hitch/Hitch-Out while Slot WR attacks middle seam.',
+    correctAnswer: 'Smash-Seam High-Low Concept',
+    choices: ['Smash-Seam High-Low Concept', 'Mesh-Wheel Crosser Concept', 'Curl-Flat / Sail Concept', 'Fade-Out / Rub Route Concept'],
+    keyRead: 'Smash Concept: High-lows the Cornerback in Cover 2 to force him to choose between hitch and seam.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' },
+      { id: '2', role: 'W1', x: 80, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'W2', x: 92, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'CB2', x: 88, y: 45, team: 'DEF', isKeyRead: true },
+      { id: '5', role: 'SS',  x: 75, y: 20, team: 'DEF' }
+    ]
+  },
+  {
+    id: 'off15',
+    isTeamPlaybook: false,
+    mode: 'OFFENSE',
+    prompt: 'OFFENSIVE READ: Shallow shallow-crossers running under each other with RB releasing to wheel.',
+    correctAnswer: 'Mesh-Wheel Crosser Concept',
+    choices: ['Mesh-Wheel Crosser Concept', 'Smash-Seam High-Low Concept', 'RPO Inside Zone / Peak Read', 'Curl-Flat / Sail Concept'],
+    keyRead: 'Mesh Concept: Rubs man-coverage defenders while exposing middle voids in zone coverage.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' },
+      { id: '2', role: 'RB', x: 40, y: 72, team: 'OFF', isKeyRead: true },
+      { id: '3', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '4', role: 'Z',  x: 90, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '5', role: 'MIKE', x: 50, y: 48, team: 'DEF' }
     ]
   },
 
-  // ---------------------------------------------------------------------------
-  // DEFENSIVE READS (ALL SCHEMES, COVERAGES & FRONTS)
-  // ---------------------------------------------------------------------------
+  // --- DEFENSIVE FRONTS & COVERAGES ---
   {
     id: 'def_43',
     isTeamPlaybook: false,
@@ -441,72 +654,6 @@ const baseScenarios = [
     ]
   },
   {
-    id: 'def3',
-    isTeamPlaybook: false,
-    mode: 'DEFENSE',
-    prompt: 'DEFENSIVE READ: Single-high safety, CBs off at 7 yards, Strong Safety walked down.',
-    correctAnswer: 'Cover 3 Sky',
-    choices: ['Cover 2 Zone', 'Cover 3 Sky', 'Cover 4 Quarters', 'Corner Blitz'],
-    keyRead: 'Cover 3 Sky: 3 deep defenders (FS + 2 CBs). Strong Safety rotates into the box pre-snap.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'FS',   x: 50, y: 15, team: 'DEF', isKeyRead: true }, { id: '12', role: 'SS',   x: 72, y: 44, team: 'DEF', isKeyRead: true },
-      { id: '13', role: 'CB1',  x: 10, y: 25, team: 'DEF' }, { id: '14', role: 'CB2',  x: 90, y: 25, team: 'DEF' },
-      { id: '15', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '16', role: 'WILL', x: 40, y: 46, team: 'DEF' },
-      { id: '17', role: 'SAM',  x: 60, y: 46, team: 'DEF' }, { id: '18', role: 'DE1',  x: 36, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
-    ]
-  },
-  {
-    id: 'def4',
-    isTeamPlaybook: false,
-    mode: 'DEFENSE',
-    prompt: 'DEFENSIVE READ: 4 deep defensive backs aligned evenly at 8-10 yards depth.',
-    correctAnswer: 'Cover 4 Quarters',
-    choices: ['Cover 2 Zone', 'Cover 3 Sky', 'Cover 4 Quarters', 'Cover 0 (Zero Pressure)'],
-    keyRead: 'Cover 4 (Quarters): Safeties and corners each guard deep 4ths to eliminate vertical routes.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'FS',   x: 35, y: 18, team: 'DEF', isKeyRead: true }, { id: '12', role: 'SS',   x: 65, y: 18, team: 'DEF', isKeyRead: true },
-      { id: '13', role: 'CB1',  x: 12, y: 18, team: 'DEF' }, { id: '14', role: 'CB2',  x: 88, y: 18, team: 'DEF' },
-      { id: '15', role: 'MIKE', x: 50, y: 44, team: 'DEF' }, { id: '16', role: 'WILL', x: 40, y: 44, team: 'DEF' },
-      { id: '17', role: 'SAM',  x: 60, y: 44, team: 'DEF' }, { id: '18', role: 'DE1',  x: 36, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
-    ]
-  },
-  {
-    id: 'def5',
-    isTeamPlaybook: false,
-    mode: 'DEFENSE',
-    prompt: 'DEFENSIVE READ: No safety deep over top. All 11 defenders stacked within 5 yards.',
-    correctAnswer: 'Cover 0 (Zero Pressure)',
-    choices: ['Cover 0 (Zero Pressure)', 'Cover 2 Zone', 'Cover 3 Sky', 'Cover 4 Quarters'],
-    keyRead: 'Cover 0: All-out pressure without deep safety protection. Throw to the "Hot" route instantly.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
-      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'FS',   x: 42, y: 46, team: 'DEF', isKeyRead: true }, { id: '12', role: 'SS',   x: 58, y: 46, team: 'DEF', isKeyRead: true },
-      { id: '13', role: 'CB1',  x: 10, y: 52, team: 'DEF' }, { id: '14', role: 'CB2',  x: 90, y: 52, team: 'DEF' },
-      { id: '15', role: 'MIKE', x: 50, y: 50, team: 'DEF' }, { id: '16', role: 'WILL', x: 36, y: 50, team: 'DEF' },
-      { id: '17', role: 'SAM',  x: 64, y: 50, team: 'DEF' }, { id: '18', role: 'DE1',  x: 32, y: 55, team: 'DEF' },
-      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
-      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
-    ]
-  },
-  {
     id: 'def6',
     isTeamPlaybook: false,
     mode: 'DEFENSE',
@@ -617,108 +764,123 @@ const baseScenarios = [
     ]
   },
 
-  // ---------------------------------------------------------------------------
-  // OFFENSIVE FORMATION READS
-  // ---------------------------------------------------------------------------
+  // --- WEMBLEY STALLIONS SENIOR PASS PLAYS ---
   {
-    id: 'off1',
-    isTeamPlaybook: false,
+    id: 'uk_play_01',
+    isTeamPlaybook: true,
     mode: 'OFFENSE',
-    prompt: 'OFFENSIVE READ: 1 RB, 1 TE inline left, 3 WRs aligned right.',
-    correctAnswer: '11 Personnel / Trips Right',
-    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', 'Pistol Alignment'],
-    keyRead: '11 Personnel Trips: 1 RB + 1 TE + 3 WRs. Overloads right side passing zones.',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 10 Personnel 2x2 spread concept.',
+    correctAnswer: 'BENCH 10 - (2 x 2)',
+    choices: ['BENCH 10 - (2 x 2)', 'BILLIE 10 - (2 x 2)', 'DEEP OUT 10 - (2 x 2)', 'SLANTS 10 - (2 x 2)'],
+    keyRead: 'Stallions Call: BENCH 10 targeting flat defenders out of a 2x2 spread.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 44, y: 72, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'W1', x: 10, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'W2', x: 24, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W3', x: 76, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '11', role: 'W4', x: 90, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 35, y: 20, team: 'DEF' },
+      { id: '13', role: 'SS',   x: 65, y: 20, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
+      { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' }, { id: '16', role: 'NC1',  x: 24, y: 38, team: 'DEF' },
+      { id: '17', role: 'NC2',  x: 76, y: 38, team: 'DEF' }, { id: '18', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
+      { id: '19', role: 'DE1',  x: 34, y: 55, team: 'DEF' }, { id: '20', role: 'DT1',  x: 48, y: 55, team: 'DEF' },
+      { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
+    ]
+  },
+  {
+    id: 'uk_play_02',
+    isTeamPlaybook: true,
+    mode: 'OFFENSE',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 11 Personnel 3x1 unbalanced concept.',
+    correctAnswer: 'DEEP OUT 11 - (3 x 1)',
+    choices: ['BENCH 11 - (3 x 1)', 'DEEP OUT 11 - (3 x 1)', 'FAN BUNCH (3 x 1)', 'FLOOD 11 - (3 x 1)'],
+    keyRead: 'Stallions Call: DEEP OUT 11 featuring 1 TE inline left with 3 receivers stacked right.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'TE', x: 32, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'W1', x: 72, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W2', x: 82, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '11', role: 'W3', x: 92, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' },
+      { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
+      { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' }, { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
+      { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' }, { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
+      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
+      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
+    ]
+  },
+  {
+    id: 'uk_play_03',
+    isTeamPlaybook: true,
+    mode: 'OFFENSE',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this 3x1 bunch alignment.',
+    correctAnswer: 'FAN BUNCH (3 x 1)',
+    choices: ['FAN BUNCH (3 x 1)', 'BENCH BUNCH (3 x 1)', 'BILLIE BUNCH (3 x 1)', 'MESH BUNCH (3 x 1)'],
+    keyRead: 'Stallions Call: FAN BUNCH 3x1 receiver cluster to release wide fan routes.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 42, y: 72, team: 'OFF' },
       { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
       { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
       { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'TE', x: 32, y: 60, team: 'OFF' },
-      { id: '9', role: 'W1', x: 74, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '10', role: 'W2', x: 82, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '11', role: 'W3', x: 90, y: 60, team: 'OFF', isKeyRead: true },
-      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' },
-      { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' },
-      { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' },
-      { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' }, { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' },
-      { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
+      { id: '9', role: 'W1', x: 80, y: 60, team: 'OFF', isKeyRead: true }, { id: '10', role: 'W2', x: 84, y: 63, team: 'OFF', isKeyRead: true },
+      { id: '11', role: 'W3', x: 88, y: 60, team: 'OFF', isKeyRead: true }, { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' },
+      { id: '13', role: 'SS',   x: 75, y: 35, team: 'DEF' }, { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' },
+      { id: '15', role: 'CB2',  x: 82, y: 35, team: 'DEF' }, { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' },
+      { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' }, { id: '18', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
+      { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' },
+      { id: '21', role: 'DE2',  x: 68, y: 55, team: 'DEF' },
     ]
   },
   {
-    id: 'off2',
-    isTeamPlaybook: false,
+    id: 'uk_play_04',
+    isTeamPlaybook: true,
     mode: 'OFFENSE',
-    prompt: 'OFFENSIVE READ: 2 Running Backs stacked under center with 2 Tight Ends.',
-    correctAnswer: '22 Personnel / Heavy I-Form',
-    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', 'Unbalanced Line / Tackle Over'],
-    keyRead: '22 Personnel: Heavy run alignment requiring an 8-man box.',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this trick play design.',
+    correctAnswer: 'GADGETS HOOK & LADDER',
+    choices: ['GADGETS HOOK & LADDER', 'GADGETS SLIP SCREEN', 'GADGETS CROSS SCREEN', 'GADGETS Tunnel Screen'],
+    keyRead: 'Stallions Gadget: Hook route curl with immediate lateral pitch to trailing receiver.',
     players: [
-      { id: '1', role: 'QB', x: 50, y: 68, team: 'OFF' }, { id: '2', role: 'FB', x: 50, y: 76, team: 'OFF', isKeyRead: true },
-      { id: '3', role: 'RB', x: 50, y: 84, team: 'OFF', isKeyRead: true }, { id: '4', role: 'T1', x: 32, y: 60, team: 'OFF' },
-      { id: '5', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '6', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '7', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '8', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '9', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '10', role: 'T2', x: 68, y: 60, team: 'OFF' },
-      { id: '11', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 65, y: 44, team: 'DEF' },
-      { id: '14', role: 'CB1',  x: 10, y: 40, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 40, team: 'DEF' },
-      { id: '16', role: 'MIKE', x: 50, y: 48, team: 'DEF' }, { id: '17', role: 'WILL', x: 42, y: 48, team: 'DEF' },
-      { id: '18', role: 'SAM',  x: 58, y: 48, team: 'DEF' }, { id: '19', role: 'DE1',  x: 30, y: 55, team: 'DEF' },
-      { id: '20', role: 'DT1',  x: 45, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 70, y: 55, team: 'DEF' },
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 44, y: 72, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'X',  x: 10, y: 60, team: 'OFF', isKeyRead: true },
+      { id: '9', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '10', role: 'Y', x: 26, y: 60, team: 'OFF', isKeyRead: true }
     ]
   },
   {
-    id: 'off4',
-    isTeamPlaybook: false,
+    id: 'uk_play_05',
+    isTeamPlaybook: true,
     mode: 'OFFENSE',
-    prompt: 'OFFENSIVE READ: 1 RB directly behind QB in shotgun with H-Back offset.',
-    correctAnswer: 'Pistol Alignment',
-    choices: ['11 Personnel / Trips Right', 'Pistol Alignment', '10 Personnel / Empty Backfield', '22 Personnel / Heavy I-Form'],
-    keyRead: 'Pistol: RB aligns directly behind QB for downhill run flow.',
-    players: [
-      { id: '1', role: 'QB', x: 50, y: 68, team: 'OFF', isKeyRead: true },
-      { id: '2', role: 'RB', x: 50, y: 76, team: 'OFF', isKeyRead: true },
-      { id: '3', role: 'HB', x: 58, y: 64, team: 'OFF', isKeyRead: true },
-      { id: '4', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '5', role: 'LG', x: 44, y: 60, team: 'OFF' },
-      { id: '6', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '7', role: 'RG', x: 56, y: 60, team: 'OFF' },
-      { id: '8', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '9', role: 'X',  x: 10, y: 60, team: 'OFF' },
-      { id: '10', role: 'Z',  x: 90, y: 60, team: 'OFF' }, { id: '11', role: 'Y', x: 30, y: 60, team: 'OFF' },
-      { id: '12', role: 'FS',   x: 50, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 68, y: 38, team: 'DEF' },
-      { id: '14', role: 'CB1',  x: 10, y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 90, y: 35, team: 'DEF' },
-      { id: '16', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '17', role: 'WILL', x: 40, y: 46, team: 'DEF' },
-      { id: '18', role: 'DE1',  x: 34, y: 55, team: 'DEF' }, { id: '19', role: 'DT1',  x: 45, y: 55, team: 'DEF' },
-      { id: '20', role: 'DT2',  x: 55, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 66, y: 55, team: 'DEF' },
-    ]
-  },
-  {
-    id: 'off5',
-    isTeamPlaybook: false,
-    mode: 'OFFENSE',
-    prompt: 'OFFENSIVE READ: No running back in backfield. 5 wide receivers spread across line.',
-    correctAnswer: '10 Personnel / Empty Backfield',
-    choices: ['11 Personnel / Trips Right', '22 Personnel / Heavy I-Form', '10 Personnel / Empty Backfield', 'Wildcat Package'],
-    keyRead: 'Empty Backfield: 100% pass threat or QB draw. Defense must check to nickel/dime coverage.',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this empty 5-receiver package.',
+    correctAnswer: 'EMPTY(00) Double Bench',
+    choices: ['EMPTY(00) Double Bench', 'EMPTY(00) Jet Sweep Pop', 'EMPTY(00) OB Draw', 'EMPTY(00) Deep Out'],
+    keyRead: 'Stallions Empty Set: 5 receivers split out running bench/out concepts.',
     players: [
       { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF', isKeyRead: true },
       { id: '2', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '3', role: 'LG', x: 44, y: 60, team: 'OFF' },
       { id: '4', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '5', role: 'RG', x: 56, y: 60, team: 'OFF' },
       { id: '6', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '7', role: 'W1', x: 8,  y: 60, team: 'OFF' },
       { id: '8', role: 'W2', x: 22, y: 60, team: 'OFF' }, { id: '9', role: 'W3', x: 74, y: 60, team: 'OFF' },
-      { id: '10', role: 'W4', x: 84, y: 60, team: 'OFF' }, { id: '11', role: 'W5', x: 94, y: 60, team: 'OFF' },
-      { id: '12', role: 'FS',   x: 35, y: 20, team: 'DEF' }, { id: '13', role: 'SS',   x: 65, y: 20, team: 'DEF' },
-      { id: '14', role: 'CB1',  x: 8,  y: 35, team: 'DEF' }, { id: '15', role: 'CB2',  x: 94, y: 35, team: 'DEF' },
-      { id: '16', role: 'NC1',  x: 22, y: 35, team: 'DEF' }, { id: '17', role: 'NC2',  x: 84, y: 35, team: 'DEF' },
-      { id: '18', role: 'MIKE', x: 50, y: 46, team: 'DEF' }, { id: '19', role: 'DE1',  x: 36, y: 55, team: 'DEF' },
-      { id: '20', role: 'DT1',  x: 48, y: 55, team: 'DEF' }, { id: '21', role: 'DE2',  x: 64, y: 55, team: 'DEF' },
+      { id: '10', role: 'W4', x: 84, y: 60, team: 'OFF' }, { id: '11', role: 'W5', x: 94, y: 60, team: 'OFF' }
+    ]
+  },
+  {
+    id: 'uk_play_06',
+    isTeamPlaybook: true,
+    mode: 'DEFENSE',
+    prompt: '🇬🇧 WEMBLEY STALLIONS: Identify this defensive front check.',
+    correctAnswer: "CATS 5-2 Pressure Front ('TIGER')",
+    choices: ["CATS 5-2 Pressure Front ('TIGER')", 'CATS Crow', 'KNIGHTS 4-2-5 Defence', 'KNIGHTS 5-2 Cover 1'],
+    keyRead: 'Stallions Defensive Check: 5-2 pressure alignment designed to plug running gaps.',
+    players: [
+      { id: '1', role: 'QB', x: 50, y: 72, team: 'OFF' }, { id: '2', role: 'RB', x: 50, y: 82, team: 'OFF' },
+      { id: '3', role: 'LT', x: 38, y: 60, team: 'OFF' }, { id: '4', role: 'LG', x: 44, y: 60, team: 'OFF' },
+      { id: '5', role: 'C',  x: 50, y: 60, team: 'OFF' }, { id: '6', role: 'RG', x: 56, y: 60, team: 'OFF' },
+      { id: '7', role: 'RT', x: 62, y: 60, team: 'OFF' }, { id: '8', role: 'E1', x: 30, y: 55, team: 'DEF', isKeyRead: true },
+      { id: '9', role: 'T1', x: 40, y: 55, team: 'DEF', isKeyRead: true }, { id: '10', role: 'N', x: 50, y: 55, team: 'DEF', isKeyRead: true },
+      { id: '11', role: 'T2', x: 60, y: 55, team: 'DEF', isKeyRead: true }, { id: '12', role: 'E2', x: 70, y: 55, team: 'DEF', isKeyRead: true }
     ]
   }
-];
-
-const MASTER_CHOICE_POOL = [
-  'Cover 0 (Zero Pressure)', 'Cover 1 Man', 'Cover 2 Zone', 'Cover 3 Sky',
-  'Cover 4 Quarters', 'Cover 6 Hybrid', 'Double A-Gap Blitz', 'Nickel Corner Blitz',
-  '4-3 Base Front', '3-4 Base Front', 'BENCH 10 - (2 x 2)', 'DEEP OUT 11 - (3 x 1)',
-  'FAN BUNCH (3 x 1)', '22 Personnel / Heavy I-Form', 'Pistol Alignment',
-  'Check to Hot Quick Slant / Sight Adjust', 'Deep Middle Seam (Tampa Gap)',
-  'Curl-Flat / Sail Concept', 'Check to Inside Zone / Mid-Zone Run'
 ];
 
 const shuffleArray = (array) => {
@@ -731,21 +893,34 @@ const shuffleArray = (array) => {
 };
 
 // =============================================================================
-// DYNAMIC PROCEDURAL VARIATION ENGINE
+// ADVANCED DYNAMIC PROCEDURAL ENGINE (FIXED FILTERING)
 // =============================================================================
 const generateDynamicVariations = (baseList, isTeamMode, currentMode) => {
-  const filtered = baseList.filter(
-    (s) => s.isTeamPlaybook === isTeamMode && (isTeamMode || s.mode === currentMode)
-  );
+  // Safe Mode Filter: Ensures scenarios without an explicit mode are included properly
+  const filtered = baseList.filter((s) => {
+    if (isTeamMode) {
+      return s.isTeamPlaybook === true;
+    } else {
+      return !s.isTeamPlaybook && (s.mode === currentMode || !s.mode);
+    }
+  });
 
   const pool = filtered.length ? filtered : baseList;
   const proceduralQueue = [];
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     const archetype = pool[i % pool.length];
-    const shouldFlipFormation = Math.random() > 0.5;
-    const hashShiftX = Math.round((Math.random() - 0.5) * 12);
-    const safetyDepthShiftY = Math.round((Math.random() - 0.5) * 8);
+    
+    // VARIATION CONTROLS
+    const shouldFlipFormation = Math.random() > 0.4;
+    const isUnbalancedShift = Math.random() > 0.7;
+    const hasPreSnapMotion = Math.random() > 0.6;
+    const isDisguisedCoverage = Math.random() > 0.65;
+    
+    // RANDOM OFFSETS
+    const hashShiftX = Math.round((Math.random() - 0.5) * 16);
+    const safetyDepthShiftY = Math.round((Math.random() - 0.5) * 12);
+    const secondaryCreepX = Math.round((Math.random() - 0.5) * 8);
 
     const transformedPlayers = archetype.players.map((p) => {
       let newX = p.x;
@@ -754,10 +929,27 @@ const generateDynamicVariations = (baseList, isTeamMode, currentMode) => {
       if (shouldFlipFormation) {
         newX = 100 - newX;
       }
+
       newX = newX + hashShiftX;
 
-      if (p.role === 'FS' || p.role === 'SS') {
+      if (isUnbalancedShift && p.team === 'OFF' && (p.role === 'RT' || p.role === 'Y' || p.role === 'Z')) {
+        newX = shouldFlipFormation ? newX - 10 : newX + 10;
+      }
+
+      if (isDisguisedCoverage && p.team === 'DEF') {
+        if (p.role === 'FS' || p.role === 'SS') {
+          newY = newY + 14; 
+          newX = newX + secondaryCreepX;
+        } else if (p.role === 'CB1' || p.role === 'CB2') {
+          newY = Math.max(15, newY - 10);
+        }
+      } else if (p.role === 'FS' || p.role === 'SS') {
         newY = newY + safetyDepthShiftY;
+      }
+
+      if (hasPreSnapMotion && (p.role === 'W2' || p.role === 'RB' || p.role === 'HB')) {
+        newX = shouldFlipFormation ? newX + 18 : newX - 18;
+        newY = newY + 4;
       }
 
       newX = Math.max(6, Math.min(94, newX));
@@ -767,8 +959,14 @@ const generateDynamicVariations = (baseList, isTeamMode, currentMode) => {
         ...p,
         x: newX,
         y: newY,
+        role: (hasPreSnapMotion && (p.role === 'W2' || p.role === 'RB')) ? `${p.role} (Mot)` : p.role
       };
     });
+
+    let promptModifier = '';
+    if (shouldFlipFormation) promptModifier += ' [FLIPPED]';
+    if (hasPreSnapMotion) promptModifier += ' [IN MOTION]';
+    if (isDisguisedCoverage) promptModifier += ' [DISGUISED LOOK]';
 
     const wrongDistractors = shuffleArray(
       MASTER_CHOICE_POOL.filter((c) => c !== archetype.correctAnswer)
@@ -779,9 +977,7 @@ const generateDynamicVariations = (baseList, isTeamMode, currentMode) => {
     proceduralQueue.push({
       ...archetype,
       id: `${archetype.id}_gen_${i}_${Date.now()}`,
-      prompt: shouldFlipFormation
-        ? `${archetype.prompt} (Flipped Formation)`
-        : archetype.prompt,
+      prompt: `${archetype.prompt}${promptModifier}`,
       players: transformedPlayers,
       choices: dynamicChoices,
     });
@@ -791,7 +987,7 @@ const generateDynamicVariations = (baseList, isTeamMode, currentMode) => {
 };
 
 // =============================================================================
-// MAIN DEFAULT APP COMPONENT
+// MAIN APP COMPONENT
 // =============================================================================
 export default function App() {
   const [allScenarios, setAllScenarios] = useState(baseScenarios);
@@ -1243,7 +1439,7 @@ const styles = StyleSheet.create({
   },
   headerRow: {
     flexDirection: 'row',
-    justify: 'space-between',
+    justifyContent: 'space-between',
     width: '100%',
     marginTop: 8,
     alignItems: 'center',
@@ -1254,7 +1450,7 @@ const styles = StyleSheet.create({
 
   scoreBoard: {
     flexDirection: 'row',
-    justify: 'space-between',
+    justifyContent: 'space-between',
     width: '100%',
     backgroundColor: '#1E293B',
     paddingHorizontal: 16,
@@ -1289,7 +1485,7 @@ const styles = StyleSheet.create({
   fieldBoardWrapper: {
     width: '100%',
     alignItems: 'center',
-    justify: 'center',
+    justifyContent: 'center',
     marginVertical: 6,
   },
   fieldBoard: {
@@ -1309,7 +1505,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    justify: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1.5,
     borderColor: '#FFFFFF',
@@ -1317,11 +1513,11 @@ const styles = StyleSheet.create({
   offenseNode: { backgroundColor: '#22C55E' },
   defenseNode: { backgroundColor: '#EF4444' },
   keyReadHighlight: { borderColor: '#F59E0B', borderWidth: 3 },
-  nodeText: { color: '#FFF', fontSize: 8, fontWeight: 'bold' },
+  nodeText: { color: '#FFF', fontSize: 6.5, fontWeight: 'bold' },
 
   buttonGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', width: '100%', marginTop: 6 },
   choiceBtn: { backgroundColor: '#1E293B', width: '48%', padding: 10, borderRadius: 8, marginBottom: 6, alignItems: 'center' },
-  btnText: { color: '#FFF', fontWeight: 'bold', fontSize: 10 },
+  btnText: { color: '#FFF', fontWeight: 'bold', fontSize: 10, textAlign: 'center' },
   correctBtn: { backgroundColor: '#16A34A' },
   wrongBtn: { backgroundColor: '#DC2626' },
 
